@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package fleet;
+
+import "google/protobuf/empty.proto";
+
+
+option go_package = "pkg/protobuf/fleet";
+
+// Fleet server
+service FleetService {
+    rpc ListVehicles(google.protobuf.Empty) returns (VehicleList) {}
+    rpc AddVehicle(VehicleRequest) returns (VehicleResponse) {}
+    rpc GetVehiclesByOpStatus(GetVehiclesByOpStatusRequest) returns (VehicleList) {}
+    rpc GetVehiclesByYear(GetVehiclesByYearRequest) returns (VehicleList) {}
+}
+
+message Vehicle {
+    string fleet_number = 1;
+    string operational_status = 2;
+    string lfb = 3;
+    string make = 4;
+    string model = 5;
+    string type = 6;
+    string category = 7;
+    int32 registration_year = 8;
+    int32 life = 9;
+}
+
+message VehicleRequest {
+    string operational_status = 2;
+    string lfb = 3;
+    string make = 4;
+    string model = 5;
+    string type = 6;
+    string category = 7;
+    int32 registration_year = 8;
+    int32 life = 9;
+}
+
+message GetVehiclesByOpStatusRequest {
+    string status = 1;
+}
+
+message GetVehiclesByYearRequest {
+    int32 year = 1;
+}
+
+message VehicleResponse {
+    Vehicle vehicle = 1;
+    bool created = 2;
+}
+
+message VehicleList {
+    repeated Vehicle vehicles = 1;
+}

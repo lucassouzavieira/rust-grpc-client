@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package incident;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "pkg/protobuf/incident";
+
+// Incidents server
+service IncidentService {
+    rpc ListIncidents(google.protobuf.Empty) returns (IncidentList) {}
+    rpc GetIncidentsByAnimalGroup(GetIncidentsByAnimalGroupRequest) returns (IncidentList) {}
+}
+
+message Incident {
+    int64 number = 1;
+    string call_datetime = 2;
+    int32 year = 3;
+    string type = 4;
+    int32 pump_count = 5;
+    int32 pump_hours_total = 6;
+    int32 incident_hourly_cost = 7;
+    int32 incident_notional_cost = 8;
+    string animal_group = 10;
+    string final_description = 11;
+
+    message Call {
+        string origin = 1;
+    }
+    
+    message Property {
+        string type = 1;
+        string category = 2;
+    }
+    
+    message SpecialService {
+        string type = 1;
+        string category = 2;
+    }
+    
+    message Ward {
+        string code = 1;
+        string name = 2;
+    }
+    
+    message Address {
+        message Borough {
+            string code = 1;
+            string name = 2;
+            string stn_ground_name = 3;
+        }
+        
+        Borough borough_info = 1;
+        string street = 2;
+        string usrn = 3;
+        string postcode_district = 4;
+        double latitude = 5;
+        double longitude = 6;
+    }
+
+    Call origin = 12;
+    Property property = 13;
+    SpecialService special_service = 14;
+    Ward ward = 15;
+    Address address = 16;
+}
+
+message IncidentList {
+    repeated Incident incidents = 1;
+}
+
+message GetIncidentsByAnimalGroupRequest {
+    string group = 1;
+}
