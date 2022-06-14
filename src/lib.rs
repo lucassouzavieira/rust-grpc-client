@@ -1,14 +1,5 @@
-mod proto;
-
-pub mod grpc {
-    use crate::proto;
-    use proto::fleet::fleet_service_client::FleetServiceClient;
-
-    pub fn get_client(){
-        let mut client = FleetServiceClient::connect("localhost:9200").await?;
-        println!("{:?}", client)
-    }
-}
+pub mod proto;
+pub mod grpc;
 
 pub mod cli {
     use clap::{Parser, Subcommand};
@@ -22,7 +13,7 @@ pub mod cli {
         pub addr: Option<String>,
 
         #[clap(subcommand)]
-        pub cmd: SubCommand
+        pub cmd: SubCommand,
     }
 
     #[derive(Subcommand, Debug)]
