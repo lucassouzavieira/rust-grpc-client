@@ -1,9 +1,10 @@
 fn main() {
-    let fleet_proto_file = "./proto/fleet.proto";
-    let incident_proto_file = "./proto/incident.proto";
+    let fleet_proto_file = "proto/fleet.proto";
+    let incident_proto_file = "proto/incident.proto";
 
     tonic_build::configure()
         .build_client(true)
+        .out_dir("src/proto/")
         .compile(&[fleet_proto_file, incident_proto_file], &["."])
         .unwrap_or_else(|e| panic!("Error while compiling protos: {}", e));
 
