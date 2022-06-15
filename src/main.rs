@@ -1,13 +1,10 @@
 extern crate core;
-
-use clap::Parser;
 ///
 /// main.rs
 ///
 ///
+use clap::Parser;
 use env_logger::{Builder, Target};
-use log::error;
-
 use rust_grpc_client::{cli, grpc};
 
 #[tokio::main]
@@ -17,27 +14,21 @@ async fn main() {
         .init();
 
     let args = cli::Arguments::parse();
-    let mut server: String = stringify!(args.addr).parse().unwrap();
-
-    if server.len() == 0 {
-        server = "http://[::1]:9200".parse().unwrap();
-    }
+    let server = args.addr.as_deref().unwrap();
 
     match &args.cmd {
         cli::SubCommand::Fleet { all: true } => {
-            let client = grpc::fleet::fleet::get_client(server.to_string());
-            let client = match client.await {
-                Ok(Result) => {
-                    error!("Hello! Client is ok! {:?}", args)
-                }
-                Err(error) => {
-                    panic!("Cannot connect to gRPC server: {:?}", error)
-                }
-            };
-            println!("{:?}", args.addr);
+            let results = grpc::fleet::fleet::list_vehicles(String::from(server));
+            let vx_list = results.await.into_inner();
+
+            for vehicle in 0..vx_list.vehicles.len() {
+                println!("{:?}", vx_list.vehicles[vehicle]);
+            }
+
+            println!("Total LFB fleet size: {} vehicles", vx_list.vehicles.len())
         }
         cli::SubCommand::Fleet { all: false } => {
-            error!("Hello! {:?}", args)
+            todo!()
         }
         cli::SubCommand::Incident { all: true } => {
             todo!()
