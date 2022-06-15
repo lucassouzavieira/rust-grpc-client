@@ -1,100 +1,100 @@
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Incident {
-    #[prost(int64, tag="1")]
+    #[prost(int64, tag = "1")]
     pub number: i64,
-    #[prost(string, tag="2")]
+    #[prost(string, tag = "2")]
     pub call_datetime: ::prost::alloc::string::String,
-    #[prost(int32, tag="3")]
+    #[prost(int32, tag = "3")]
     pub year: i32,
-    #[prost(string, tag="4")]
+    #[prost(string, tag = "4")]
     pub r#type: ::prost::alloc::string::String,
-    #[prost(int32, tag="5")]
+    #[prost(int32, tag = "5")]
     pub pump_count: i32,
-    #[prost(int32, tag="6")]
+    #[prost(int32, tag = "6")]
     pub pump_hours_total: i32,
-    #[prost(int32, tag="7")]
+    #[prost(int32, tag = "7")]
     pub incident_hourly_cost: i32,
-    #[prost(int32, tag="8")]
+    #[prost(int32, tag = "8")]
     pub incident_notional_cost: i32,
-    #[prost(string, tag="10")]
+    #[prost(string, tag = "10")]
     pub animal_group: ::prost::alloc::string::String,
-    #[prost(string, tag="11")]
+    #[prost(string, tag = "11")]
     pub final_description: ::prost::alloc::string::String,
-    #[prost(message, optional, tag="12")]
+    #[prost(message, optional, tag = "12")]
     pub origin: ::core::option::Option<incident::Call>,
-    #[prost(message, optional, tag="13")]
+    #[prost(message, optional, tag = "13")]
     pub property: ::core::option::Option<incident::Property>,
-    #[prost(message, optional, tag="14")]
+    #[prost(message, optional, tag = "14")]
     pub special_service: ::core::option::Option<incident::SpecialService>,
-    #[prost(message, optional, tag="15")]
+    #[prost(message, optional, tag = "15")]
     pub ward: ::core::option::Option<incident::Ward>,
-    #[prost(message, optional, tag="16")]
+    #[prost(message, optional, tag = "16")]
     pub address: ::core::option::Option<incident::Address>,
 }
 /// Nested message and enum types in `Incident`.
 pub mod incident {
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Call {
-        #[prost(string, tag="1")]
+        #[prost(string, tag = "1")]
         pub origin: ::prost::alloc::string::String,
     }
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Property {
-        #[prost(string, tag="1")]
+        #[prost(string, tag = "1")]
         pub r#type: ::prost::alloc::string::String,
-        #[prost(string, tag="2")]
+        #[prost(string, tag = "2")]
         pub category: ::prost::alloc::string::String,
     }
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct SpecialService {
-        #[prost(string, tag="1")]
+        #[prost(string, tag = "1")]
         pub r#type: ::prost::alloc::string::String,
-        #[prost(string, tag="2")]
+        #[prost(string, tag = "2")]
         pub category: ::prost::alloc::string::String,
     }
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Ward {
-        #[prost(string, tag="1")]
+        #[prost(string, tag = "1")]
         pub code: ::prost::alloc::string::String,
-        #[prost(string, tag="2")]
+        #[prost(string, tag = "2")]
         pub name: ::prost::alloc::string::String,
     }
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Address {
-        #[prost(message, optional, tag="1")]
+        #[prost(message, optional, tag = "1")]
         pub borough_info: ::core::option::Option<address::Borough>,
-        #[prost(string, tag="2")]
+        #[prost(string, tag = "2")]
         pub street: ::prost::alloc::string::String,
-        #[prost(string, tag="3")]
+        #[prost(string, tag = "3")]
         pub usrn: ::prost::alloc::string::String,
-        #[prost(string, tag="4")]
+        #[prost(string, tag = "4")]
         pub postcode_district: ::prost::alloc::string::String,
-        #[prost(double, tag="5")]
+        #[prost(double, tag = "5")]
         pub latitude: f64,
-        #[prost(double, tag="6")]
+        #[prost(double, tag = "6")]
         pub longitude: f64,
     }
     /// Nested message and enum types in `Address`.
     pub mod address {
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct Borough {
-            #[prost(string, tag="1")]
+            #[prost(string, tag = "1")]
             pub code: ::prost::alloc::string::String,
-            #[prost(string, tag="2")]
+            #[prost(string, tag = "2")]
             pub name: ::prost::alloc::string::String,
-            #[prost(string, tag="3")]
+            #[prost(string, tag = "3")]
             pub stn_ground_name: ::prost::alloc::string::String,
         }
     }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct IncidentList {
-    #[prost(message, repeated, tag="1")]
+    #[prost(message, repeated, tag = "1")]
     pub incidents: ::prost::alloc::vec::Vec<Incident>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetIncidentsByAnimalGroupRequest {
-    #[prost(string, tag="1")]
+    #[prost(string, tag = "1")]
     pub group: ::prost::alloc::string::String,
 }
 /// Generated client implementations.
@@ -141,9 +141,8 @@ pub mod incident_service_client {
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+                Into<StdError> + Send + Sync,
         {
             IncidentServiceClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -166,34 +165,27 @@ pub mod incident_service_client {
             &mut self,
             request: impl tonic::IntoRequest<()>,
         ) -> Result<tonic::Response<super::IncidentList>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/incident.IncidentService/ListIncidents",
-            );
+            let path =
+                http::uri::PathAndQuery::from_static("/incident.IncidentService/ListIncidents");
             self.inner.unary(request.into_request(), path, codec).await
         }
         pub async fn get_incidents_by_animal_group(
             &mut self,
             request: impl tonic::IntoRequest<super::GetIncidentsByAnimalGroupRequest>,
         ) -> Result<tonic::Response<super::IncidentList>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/incident.IncidentService/GetIncidentsByAnimalGroup",
@@ -238,10 +230,7 @@ pub mod incident_service_server {
                 send_compression_encodings: Default::default(),
             }
         }
-        pub fn with_interceptor<F>(
-            inner: T,
-            interceptor: F,
-        ) -> InterceptedService<Self, F>
+        pub fn with_interceptor<F>(inner: T, interceptor: F) -> InterceptedService<Self, F>
         where
             F: tonic::service::Interceptor,
         {
@@ -257,10 +246,7 @@ pub mod incident_service_server {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
         type Future = BoxFuture<Self::Response, Self::Error>;
-        fn poll_ready(
-            &mut self,
-            _cx: &mut Context<'_>,
-        ) -> Poll<Result<(), Self::Error>> {
+        fn poll_ready(&mut self, _cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -269,18 +255,12 @@ pub mod incident_service_server {
                 "/incident.IncidentService/ListIncidents" => {
                     #[allow(non_camel_case_types)]
                     struct ListIncidentsSvc<T: IncidentService>(pub Arc<T>);
-                    impl<T: IncidentService> tonic::server::UnaryService<()>
-                    for ListIncidentsSvc<T> {
+                    impl<T: IncidentService> tonic::server::UnaryService<()> for ListIncidentsSvc<T> {
                         type Response = super::IncidentList;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(&mut self, request: tonic::Request<()>) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move {
-                                (*inner).list_incidents(request).await
-                            };
+                            let fut = async move { (*inner).list_incidents(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -291,11 +271,10 @@ pub mod incident_service_server {
                         let inner = inner.0;
                         let method = ListIncidentsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -304,21 +283,15 @@ pub mod incident_service_server {
                 "/incident.IncidentService/GetIncidentsByAnimalGroup" => {
                     #[allow(non_camel_case_types)]
                     struct GetIncidentsByAnimalGroupSvc<T: IncidentService>(pub Arc<T>);
-                    impl<
-                        T: IncidentService,
-                    > tonic::server::UnaryService<
-                        super::GetIncidentsByAnimalGroupRequest,
-                    > for GetIncidentsByAnimalGroupSvc<T> {
+                    impl<T: IncidentService>
+                        tonic::server::UnaryService<super::GetIncidentsByAnimalGroupRequest>
+                        for GetIncidentsByAnimalGroupSvc<T>
+                    {
                         type Response = super::IncidentList;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<
-                                super::GetIncidentsByAnimalGroupRequest,
-                            >,
+                            request: tonic::Request<super::GetIncidentsByAnimalGroupRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
                             let fut = async move {
@@ -334,28 +307,23 @@ pub mod incident_service_server {
                         let inner = inner.0;
                         let method = GetIncidentsByAnimalGroupSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)
                 }
-                _ => {
-                    Box::pin(async move {
-                        Ok(
-                            http::Response::builder()
-                                .status(200)
-                                .header("grpc-status", "12")
-                                .header("content-type", "application/grpc")
-                                .body(empty_body())
-                                .unwrap(),
-                        )
-                    })
-                }
+                _ => Box::pin(async move {
+                    Ok(http::Response::builder()
+                        .status(200)
+                        .header("grpc-status", "12")
+                        .header("content-type", "application/grpc")
+                        .body(empty_body())
+                        .unwrap())
+                }),
             }
         }
     }
@@ -379,8 +347,7 @@ pub mod incident_service_server {
             write!(f, "{:?}", self.0)
         }
     }
-    impl<T: IncidentService> tonic::transport::NamedService
-    for IncidentServiceServer<T> {
+    impl<T: IncidentService> tonic::transport::NamedService for IncidentServiceServer<T> {
         const NAME: &'static str = "incident.IncidentService";
     }
 }

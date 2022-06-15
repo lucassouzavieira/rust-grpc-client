@@ -1,11 +1,13 @@
 pub mod fleet {
-    use tonic::{Request, Response};
     use tonic::transport::Channel;
+    use tonic::{Request, Response};
 
     use proto::fleet::fleet_service_client::FleetServiceClient;
 
     use crate::proto;
-    use crate::proto::fleet::{GetVehiclesByOpStatusRequest, GetVehiclesByYearRequest, VehicleList};
+    use crate::proto::fleet::{
+        GetVehiclesByOpStatusRequest, GetVehiclesByYearRequest, VehicleList,
+    };
 
     pub async fn list_vehicles(server: String) -> Response<VehicleList> {
         let mut client = get_client(server).await;
@@ -19,7 +21,10 @@ pub mod fleet {
         }
     }
 
-    pub async fn get_vehicles_by_op_status(server: String, status: String) -> Response<VehicleList> {
+    pub async fn get_vehicles_by_op_status(
+        server: String,
+        status: String,
+    ) -> Response<VehicleList> {
         let mut client = get_client(server).await;
         let req = Request::new(GetVehiclesByOpStatusRequest { status });
 

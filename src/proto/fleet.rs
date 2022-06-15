@@ -1,63 +1,63 @@
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Vehicle {
-    #[prost(string, tag="1")]
+    #[prost(string, tag = "1")]
     pub fleet_number: ::prost::alloc::string::String,
-    #[prost(string, tag="2")]
+    #[prost(string, tag = "2")]
     pub operational_status: ::prost::alloc::string::String,
-    #[prost(string, tag="3")]
+    #[prost(string, tag = "3")]
     pub lfb: ::prost::alloc::string::String,
-    #[prost(string, tag="4")]
+    #[prost(string, tag = "4")]
     pub make: ::prost::alloc::string::String,
-    #[prost(string, tag="5")]
+    #[prost(string, tag = "5")]
     pub model: ::prost::alloc::string::String,
-    #[prost(string, tag="6")]
+    #[prost(string, tag = "6")]
     pub r#type: ::prost::alloc::string::String,
-    #[prost(string, tag="7")]
+    #[prost(string, tag = "7")]
     pub category: ::prost::alloc::string::String,
-    #[prost(int32, tag="8")]
+    #[prost(int32, tag = "8")]
     pub registration_year: i32,
-    #[prost(int32, tag="9")]
+    #[prost(int32, tag = "9")]
     pub life: i32,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct VehicleRequest {
-    #[prost(string, tag="2")]
+    #[prost(string, tag = "2")]
     pub operational_status: ::prost::alloc::string::String,
-    #[prost(string, tag="3")]
+    #[prost(string, tag = "3")]
     pub lfb: ::prost::alloc::string::String,
-    #[prost(string, tag="4")]
+    #[prost(string, tag = "4")]
     pub make: ::prost::alloc::string::String,
-    #[prost(string, tag="5")]
+    #[prost(string, tag = "5")]
     pub model: ::prost::alloc::string::String,
-    #[prost(string, tag="6")]
+    #[prost(string, tag = "6")]
     pub r#type: ::prost::alloc::string::String,
-    #[prost(string, tag="7")]
+    #[prost(string, tag = "7")]
     pub category: ::prost::alloc::string::String,
-    #[prost(int32, tag="8")]
+    #[prost(int32, tag = "8")]
     pub registration_year: i32,
-    #[prost(int32, tag="9")]
+    #[prost(int32, tag = "9")]
     pub life: i32,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetVehiclesByOpStatusRequest {
-    #[prost(string, tag="1")]
+    #[prost(string, tag = "1")]
     pub status: ::prost::alloc::string::String,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetVehiclesByYearRequest {
-    #[prost(int32, tag="1")]
+    #[prost(int32, tag = "1")]
     pub year: i32,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct VehicleResponse {
-    #[prost(message, optional, tag="1")]
+    #[prost(message, optional, tag = "1")]
     pub vehicle: ::core::option::Option<Vehicle>,
-    #[prost(bool, tag="2")]
+    #[prost(bool, tag = "2")]
     pub created: bool,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct VehicleList {
-    #[prost(message, repeated, tag="1")]
+    #[prost(message, repeated, tag = "1")]
     pub vehicles: ::prost::alloc::vec::Vec<Vehicle>,
 }
 /// Generated client implementations.
@@ -104,9 +104,8 @@ pub mod fleet_service_client {
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+                Into<StdError> + Send + Sync,
         {
             FleetServiceClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -129,76 +128,58 @@ pub mod fleet_service_client {
             &mut self,
             request: impl tonic::IntoRequest<()>,
         ) -> Result<tonic::Response<super::VehicleList>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/fleet.FleetService/ListVehicles",
-            );
+            let path = http::uri::PathAndQuery::from_static("/fleet.FleetService/ListVehicles");
             self.inner.unary(request.into_request(), path, codec).await
         }
         pub async fn add_vehicle(
             &mut self,
             request: impl tonic::IntoRequest<super::VehicleRequest>,
         ) -> Result<tonic::Response<super::VehicleResponse>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/fleet.FleetService/AddVehicle",
-            );
+            let path = http::uri::PathAndQuery::from_static("/fleet.FleetService/AddVehicle");
             self.inner.unary(request.into_request(), path, codec).await
         }
         pub async fn get_vehicles_by_op_status(
             &mut self,
             request: impl tonic::IntoRequest<super::GetVehiclesByOpStatusRequest>,
         ) -> Result<tonic::Response<super::VehicleList>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/fleet.FleetService/GetVehiclesByOpStatus",
-            );
+            let path =
+                http::uri::PathAndQuery::from_static("/fleet.FleetService/GetVehiclesByOpStatus");
             self.inner.unary(request.into_request(), path, codec).await
         }
         pub async fn get_vehicles_by_year(
             &mut self,
             request: impl tonic::IntoRequest<super::GetVehiclesByYearRequest>,
         ) -> Result<tonic::Response<super::VehicleList>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/fleet.FleetService/GetVehiclesByYear",
-            );
+            let path =
+                http::uri::PathAndQuery::from_static("/fleet.FleetService/GetVehiclesByYear");
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
@@ -247,10 +228,7 @@ pub mod fleet_service_server {
                 send_compression_encodings: Default::default(),
             }
         }
-        pub fn with_interceptor<F>(
-            inner: T,
-            interceptor: F,
-        ) -> InterceptedService<Self, F>
+        pub fn with_interceptor<F>(inner: T, interceptor: F) -> InterceptedService<Self, F>
         where
             F: tonic::service::Interceptor,
         {
@@ -266,10 +244,7 @@ pub mod fleet_service_server {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
         type Future = BoxFuture<Self::Response, Self::Error>;
-        fn poll_ready(
-            &mut self,
-            _cx: &mut Context<'_>,
-        ) -> Poll<Result<(), Self::Error>> {
+        fn poll_ready(&mut self, _cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -278,18 +253,12 @@ pub mod fleet_service_server {
                 "/fleet.FleetService/ListVehicles" => {
                     #[allow(non_camel_case_types)]
                     struct ListVehiclesSvc<T: FleetService>(pub Arc<T>);
-                    impl<T: FleetService> tonic::server::UnaryService<()>
-                    for ListVehiclesSvc<T> {
+                    impl<T: FleetService> tonic::server::UnaryService<()> for ListVehiclesSvc<T> {
                         type Response = super::VehicleList;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(&mut self, request: tonic::Request<()>) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move {
-                                (*inner).list_vehicles(request).await
-                            };
+                            let fut = async move { (*inner).list_vehicles(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -300,11 +269,10 @@ pub mod fleet_service_server {
                         let inner = inner.0;
                         let method = ListVehiclesSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -313,15 +281,9 @@ pub mod fleet_service_server {
                 "/fleet.FleetService/AddVehicle" => {
                     #[allow(non_camel_case_types)]
                     struct AddVehicleSvc<T: FleetService>(pub Arc<T>);
-                    impl<
-                        T: FleetService,
-                    > tonic::server::UnaryService<super::VehicleRequest>
-                    for AddVehicleSvc<T> {
+                    impl<T: FleetService> tonic::server::UnaryService<super::VehicleRequest> for AddVehicleSvc<T> {
                         type Response = super::VehicleResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::VehicleRequest>,
@@ -338,11 +300,10 @@ pub mod fleet_service_server {
                         let inner = inner.0;
                         let method = AddVehicleSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -351,23 +312,19 @@ pub mod fleet_service_server {
                 "/fleet.FleetService/GetVehiclesByOpStatus" => {
                     #[allow(non_camel_case_types)]
                     struct GetVehiclesByOpStatusSvc<T: FleetService>(pub Arc<T>);
-                    impl<
-                        T: FleetService,
-                    > tonic::server::UnaryService<super::GetVehiclesByOpStatusRequest>
-                    for GetVehiclesByOpStatusSvc<T> {
+                    impl<T: FleetService>
+                        tonic::server::UnaryService<super::GetVehiclesByOpStatusRequest>
+                        for GetVehiclesByOpStatusSvc<T>
+                    {
                         type Response = super::VehicleList;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::GetVehiclesByOpStatusRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move {
-                                (*inner).get_vehicles_by_op_status(request).await
-                            };
+                            let fut =
+                                async move { (*inner).get_vehicles_by_op_status(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -378,11 +335,10 @@ pub mod fleet_service_server {
                         let inner = inner.0;
                         let method = GetVehiclesByOpStatusSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -391,23 +347,18 @@ pub mod fleet_service_server {
                 "/fleet.FleetService/GetVehiclesByYear" => {
                     #[allow(non_camel_case_types)]
                     struct GetVehiclesByYearSvc<T: FleetService>(pub Arc<T>);
-                    impl<
-                        T: FleetService,
-                    > tonic::server::UnaryService<super::GetVehiclesByYearRequest>
-                    for GetVehiclesByYearSvc<T> {
+                    impl<T: FleetService>
+                        tonic::server::UnaryService<super::GetVehiclesByYearRequest>
+                        for GetVehiclesByYearSvc<T>
+                    {
                         type Response = super::VehicleList;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::GetVehiclesByYearRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move {
-                                (*inner).get_vehicles_by_year(request).await
-                            };
+                            let fut = async move { (*inner).get_vehicles_by_year(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -418,28 +369,23 @@ pub mod fleet_service_server {
                         let inner = inner.0;
                         let method = GetVehiclesByYearSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)
                 }
-                _ => {
-                    Box::pin(async move {
-                        Ok(
-                            http::Response::builder()
-                                .status(200)
-                                .header("grpc-status", "12")
-                                .header("content-type", "application/grpc")
-                                .body(empty_body())
-                                .unwrap(),
-                        )
-                    })
-                }
+                _ => Box::pin(async move {
+                    Ok(http::Response::builder()
+                        .status(200)
+                        .header("grpc-status", "12")
+                        .header("content-type", "application/grpc")
+                        .body(empty_body())
+                        .unwrap())
+                }),
             }
         }
     }

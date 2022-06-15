@@ -1,5 +1,5 @@
-pub mod proto;
 pub mod grpc;
+pub mod proto;
 
 pub mod cli {
     use clap::{Parser, Subcommand};
@@ -39,7 +39,11 @@ pub mod cli {
         Incident {
             #[clap(short, long, action)]
             /// List all incidents handled by LFB
-            all: bool
+            all: bool,
+
+            #[clap(short, long, value_parser)]
+            /// List incidents by animal group
+            group: Option<String>,
         },
     }
 
@@ -62,7 +66,11 @@ pub mod cli {
             println!("{:?}", vx_list.vehicles[vehicle]);
         }
 
-        println!("Total LFB fleet size in {}: {} vehicles", status, vx_list.vehicles.len())
+        println!(
+            "Total LFB fleet size in {}: {} vehicles",
+            status,
+            vx_list.vehicles.len()
+        )
     }
 
     pub async fn get_vehicles_by_year(addr: String, year: i32) {
@@ -73,6 +81,34 @@ pub mod cli {
             println!("{:?}", vx_list.vehicles[vehicle]);
         }
 
-        println!("Total LFB fleet size from {} year: {} vehicles", year, vx_list.vehicles.len())
+        println!(
+            "Total LFB fleet size from {} year: {} vehicles",
+            year,
+            vx_list.vehicles.len()
+        )
+    }
+
+    pub async fn list_incidents(addr: String) {
+        let results = grpc::incident::incident::list_incidents(addr);
+        let ix_list = results.await.into_inner();
+
+        for ix in 0..ix_list.incidents.len() {
+            println!("{:?}", ix_list.incidents[ix]);
+            println!()
+        }
+
+        println!("Total: {} incidents", ix_list.incidents.len())
+    }
+
+    pub async fn get_incidents_by_animal_group(addr: String, group: String) {
+        let results = grpc::incident::incident::get_incidents_by_animal_group(addr, group);
+        let ix_list = results.await.into_inner();
+
+        for ix in 0..ix_list.incidents.len() {
+            println!("{:?}", ix_list.incidents[ix]);
+            println!()
+        }
+
+        println!("Total: {} incidents", ix_list.incidents.len())
     }
 }
