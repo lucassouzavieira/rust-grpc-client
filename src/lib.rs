@@ -5,7 +5,7 @@ pub mod cli {
     use clap::{Parser, Subcommand};
 
     #[derive(Parser, Debug)]
-    #[clap(author = "Lucas S. Vieira <lucassouzavieiraengcomp@gmail.com>", version, about)]
+    #[clap(author = "Lucas S. Vieira", version, about)]
     /// A gRPC CLI client
     pub struct Arguments {
         #[clap(short, long, value_parser)]
