@@ -4,6 +4,7 @@ A small CLI client written in Rust that queries data from [go-grpc-server](https
 
 ### Building
 The `protos` can be obtained using a make command:  
+
 `make proto-get`
 
 After getting the proto files, you can use `cargo build` to build the project.
