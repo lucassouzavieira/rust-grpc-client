@@ -5,7 +5,7 @@ pub mod fleet {
     use proto::fleet::fleet_service_client::FleetServiceClient;
 
     use crate::proto;
-    use crate::proto::fleet::VehicleList;
+    use crate::proto::fleet::{GetVehiclesByOpStatusRequest, VehicleList};
 
     pub async fn list_vehicles(server: String) -> Response<VehicleList> {
         let mut client = get_client(server).await;
@@ -14,7 +14,19 @@ pub mod fleet {
         match client.list_vehicles(req).await {
             Ok(response) => {
                 return response;
-            },
+            }
+            Err(e) => panic!("Something went wrong: {:?}", e),
+        }
+    }
+
+    pub async fn get_vehicles_by_op_status(server: String, status: String) -> Response<VehicleList> {
+        let mut client = get_client(server).await;
+        let req = Request::new(GetVehiclesByOpStatusRequest { status });
+
+        match client.get_vehicles_by_op_status(req).await {
+            Ok(response) => {
+                return response;
+            }
             Err(e) => panic!("Something went wrong: {:?}", e),
         }
     }

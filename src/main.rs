@@ -1,11 +1,13 @@
-extern crate core;
 ///
 /// main.rs
 ///
 ///
+extern crate core;
+
 use clap::Parser;
 use env_logger::{Builder, Target};
-use rust_grpc_client::{cli, grpc};
+
+use rust_grpc_client::cli;
 
 #[tokio::main]
 async fn main() {
@@ -17,18 +19,11 @@ async fn main() {
     let server = args.addr.as_deref().unwrap();
 
     match &args.cmd {
-        cli::SubCommand::Fleet { all: true } => {
-            let results = grpc::fleet::fleet::list_vehicles(String::from(server));
-            let vx_list = results.await.into_inner();
-
-            for vehicle in 0..vx_list.vehicles.len() {
-                println!("{:?}", vx_list.vehicles[vehicle]);
-            }
-
-            println!("Total LFB fleet size: {} vehicles", vx_list.vehicles.len())
+        cli::SubCommand::Fleet { all: true, ..} => {
+            cli::list_vehicles(String::from(server)).await;
         }
-        cli::SubCommand::Fleet { all: false } => {
-            todo!()
+        cli::SubCommand::Fleet { op_status, .. } => {
+            cli::get_vehicles_by_op_status(String::from(server), String::from(op_status)).await;
         }
         cli::SubCommand::Incident { all: true } => {
             todo!()
