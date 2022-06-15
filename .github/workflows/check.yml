@@ -1,8 +1,8 @@
-name: Build
+name: Check
 on: [push]
 jobs:
-  build:
-    name: build
+  check:
+    name: check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -12,5 +12,4 @@ jobs:
 
       - uses: actions-rs/cargo@v1
         with:
-          command: build
-          args: --release --all-features
+          command: check 
