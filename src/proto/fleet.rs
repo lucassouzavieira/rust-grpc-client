@@ -49,6 +49,24 @@ pub struct GetVehiclesByYearRequest {
     pub year: i32,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetFleetStatsRequest {
+    #[prost(int32, optional, tag = "1")]
+    pub year: ::core::option::Option<i32>,
+    #[prost(string, optional, tag = "2")]
+    pub make: ::core::option::Option<::prost::alloc::string::String>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetFleetStatsResponse {
+    #[prost(int32, tag = "1")]
+    pub active: i32,
+    #[prost(int32, tag = "2")]
+    pub reserve: i32,
+    #[prost(int32, tag = "3")]
+    pub training: i32,
+    #[prost(float, tag = "4")]
+    pub average_age: f32,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct VehicleResponse {
     #[prost(message, optional, tag = "1")]
     pub vehicle: ::core::option::Option<Vehicle>,
@@ -182,6 +200,20 @@ pub mod fleet_service_client {
                 http::uri::PathAndQuery::from_static("/fleet.FleetService/GetVehiclesByYear");
             self.inner.unary(request.into_request(), path, codec).await
         }
+        pub async fn get_fleet_stats(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetFleetStatsRequest>,
+        ) -> Result<tonic::Response<super::GetFleetStatsResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/fleet.FleetService/GetFleetStats");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -207,6 +239,10 @@ pub mod fleet_service_server {
             &self,
             request: tonic::Request<super::GetVehiclesByYearRequest>,
         ) -> Result<tonic::Response<super::VehicleList>, tonic::Status>;
+        async fn get_fleet_stats(
+            &self,
+            request: tonic::Request<super::GetFleetStatsRequest>,
+        ) -> Result<tonic::Response<super::GetFleetStatsResponse>, tonic::Status>;
     }
     /// Fleet server
     #[derive(Debug)]
@@ -368,6 +404,39 @@ pub mod fleet_service_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = GetVehiclesByYearSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/fleet.FleetService/GetFleetStats" => {
+                    #[allow(non_camel_case_types)]
+                    struct GetFleetStatsSvc<T: FleetService>(pub Arc<T>);
+                    impl<T: FleetService> tonic::server::UnaryService<super::GetFleetStatsRequest>
+                        for GetFleetStatsSvc<T>
+                    {
+                        type Response = super::GetFleetStatsResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::GetFleetStatsRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).get_fleet_stats(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = GetFleetStatsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
                             accept_compression_encodings,

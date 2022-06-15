@@ -13,6 +13,7 @@ service FleetService {
     rpc AddVehicle(VehicleRequest) returns (VehicleResponse) {}
     rpc GetVehiclesByOpStatus(GetVehiclesByOpStatusRequest) returns (VehicleList) {}
     rpc GetVehiclesByYear(GetVehiclesByYearRequest) returns (VehicleList) {}
+    rpc GetFleetStats(GetFleetStatsRequest) returns (GetFleetStatsResponse) {}
 }
 
 message Vehicle {
@@ -44,6 +45,18 @@ message GetVehiclesByOpStatusRequest {
 
 message GetVehiclesByYearRequest {
     int32 year = 1;
+}
+
+message GetFleetStatsRequest {
+    optional int32 year = 1;
+    optional string make = 2;
+}
+
+message GetFleetStatsResponse {
+    int32 active = 1;
+    int32 reserve = 2;
+    int32 training = 3;
+    float average_age = 4;
 }
 
 message VehicleResponse {
