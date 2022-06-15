@@ -6,7 +6,8 @@ pub mod fleet {
 
     use crate::proto;
     use crate::proto::fleet::{
-        GetVehiclesByOpStatusRequest, GetVehiclesByYearRequest, VehicleList,
+        GetFleetStatsRequest, GetFleetStatsResponse, GetVehiclesByOpStatusRequest,
+        GetVehiclesByYearRequest, VehicleList,
     };
 
     pub async fn list_vehicles(server: String) -> Response<VehicleList> {
@@ -41,6 +42,22 @@ pub mod fleet {
         let req = Request::new(GetVehiclesByYearRequest { year });
 
         match client.get_vehicles_by_year(req).await {
+            Ok(response) => {
+                return response;
+            }
+            Err(e) => panic!("Something went wrong: {:?}", e),
+        }
+    }
+
+    pub async fn get_fleet_stats(
+        server: String,
+        make: Option<String>,
+        year: Option<i32>,
+    ) -> Response<GetFleetStatsResponse> {
+        let mut client = get_client(server).await;
+        let req = Request::new(GetFleetStatsRequest { year, make });
+
+        match client.get_fleet_stats(req).await {
             Ok(response) => {
                 return response;
             }
