@@ -19,16 +19,23 @@ async fn main() {
     let server = args.addr.as_deref().unwrap();
 
     match &args.cmd {
-        cli::SubCommand::Fleet { all: true, ..} => {
-            cli::list_vehicles(String::from(server)).await;
+        cli::SubCommand::Fleet { all, op_status, year } => {
+            if *all {
+                cli::list_vehicles(String::from(server)).await;
+                return;
+            }
+
+            if *op_status != None {
+                let status = op_status.as_deref().unwrap();
+                cli::get_vehicles_by_op_status(String::from(server), String::from(status)).await;
+                return;
+            }
+
+            if *year != 0 {
+                cli::get_vehicles_by_year(String::from(server), *year).await;
+            }
         }
-        cli::SubCommand::Fleet { op_status, .. } => {
-            cli::get_vehicles_by_op_status(String::from(server), String::from(op_status)).await;
-        }
-        cli::SubCommand::Incident { all: true } => {
-            todo!()
-        }
-        cli::SubCommand::Incident { all: false } => {
+        cli::SubCommand::Incident { all } => {
             todo!()
         }
     }

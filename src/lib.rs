@@ -26,9 +26,13 @@ pub mod cli {
             /// List all vehicles available in LFB fleet
             all: bool,
 
-            #[clap(short, long, value_parser, default_value = "")]
-            /// operational status
-            op_status: String,
+            #[clap(short, long, value_parser)]
+            /// List vehicles by operational status
+            op_status: Option<String>,
+
+            #[clap(short, long, value_parser, default_value = "0")]
+            /// List vehicles by registration year
+            year: i32,
         },
 
         /// Handles LFB incidents info
@@ -59,5 +63,16 @@ pub mod cli {
         }
 
         println!("Total LFB fleet size in {}: {} vehicles", status, vx_list.vehicles.len())
+    }
+
+    pub async fn get_vehicles_by_year(addr: String, year: i32) {
+        let results = grpc::fleet::fleet::get_vehicles_by_year(addr, year);
+        let vx_list = results.await.into_inner();
+
+        for vehicle in 0..vx_list.vehicles.len() {
+            println!("{:?}", vx_list.vehicles[vehicle]);
+        }
+
+        println!("Total LFB fleet size from {} year: {} vehicles", year, vx_list.vehicles.len())
     }
 }
