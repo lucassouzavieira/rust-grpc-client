@@ -15,9 +15,7 @@ pub mod fleet {
         let req = Request::new({});
 
         match client.list_vehicles(req).await {
-            Ok(response) => {
-                return response;
-            }
+            Ok(response) => response,
             Err(e) => panic!("Something went wrong: {:?}", e),
         }
     }
@@ -30,9 +28,7 @@ pub mod fleet {
         let req = Request::new(GetVehiclesByOpStatusRequest { status });
 
         match client.get_vehicles_by_op_status(req).await {
-            Ok(response) => {
-                return response;
-            }
+            Ok(response) => response,
             Err(e) => panic!("Something went wrong: {:?}", e),
         }
     }
@@ -42,9 +38,7 @@ pub mod fleet {
         let req = Request::new(GetVehiclesByYearRequest { year });
 
         match client.get_vehicles_by_year(req).await {
-            Ok(response) => {
-                return response;
-            }
+            Ok(response) => response,
             Err(e) => panic!("Something went wrong: {:?}", e),
         }
     }
@@ -58,9 +52,7 @@ pub mod fleet {
         let req = Request::new(GetFleetStatsRequest { year, make });
 
         match client.get_fleet_stats(req).await {
-            Ok(response) => {
-                return response;
-            }
+            Ok(response) => response,
             Err(e) => panic!("Something went wrong: {:?}", e),
         }
     }
@@ -95,7 +87,7 @@ pub mod incident {
 
         match client.list_incidents(req).await {
             Ok(response) => {
-                return response;
+                response
             }
             Err(e) => panic!("Something went wrong: {:?}", e),
         }
@@ -110,7 +102,7 @@ pub mod incident {
 
         match client.get_incidents_by_animal_group(req).await {
             Ok(response) => {
-                return response;
+                response
             }
             Err(e) => panic!("Something went wrong: {:?}", e),
         }
