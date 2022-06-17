@@ -64,7 +64,7 @@ pub mod cli {
     }
 
     pub async fn list_vehicles(addr: String) {
-        let results = grpc::fleet::fleet::list_vehicles(addr);
+        let results = grpc::fleet::list_vehicles(addr);
         let vx_list = results.await.into_inner();
 
         for vehicle in 0..vx_list.vehicles.len() {
@@ -75,7 +75,7 @@ pub mod cli {
     }
 
     pub async fn get_vehicles_by_op_status(addr: String, status: String) {
-        let results = grpc::fleet::fleet::get_vehicles_by_op_status(addr, status.clone());
+        let results = grpc::fleet::get_vehicles_by_op_status(addr, status.clone());
         let vx_list = results.await.into_inner();
 
         for vehicle in 0..vx_list.vehicles.len() {
@@ -90,7 +90,7 @@ pub mod cli {
     }
 
     pub async fn get_vehicles_by_year(addr: String, year: i32) {
-        let results = grpc::fleet::fleet::get_vehicles_by_year(addr, year);
+        let results = grpc::fleet::get_vehicles_by_year(addr, year);
         let vx_list = results.await.into_inner();
 
         for vehicle in 0..vx_list.vehicles.len() {
@@ -105,14 +105,14 @@ pub mod cli {
     }
 
     pub async fn get_fleet_stats(addr: String, make: Option<String>, year: Option<i32>) {
-        let results = grpc::fleet::fleet::get_fleet_stats(addr, make, year);
+        let results = grpc::fleet::get_fleet_stats(addr, make, year);
         let stats = results.await.into_inner();
 
         println!("{:#?}", stats)
     }
 
     pub async fn list_incidents(addr: String) {
-        let results = grpc::incident::incident::list_incidents(addr);
+        let results = grpc::incident::list_incidents(addr);
         let ix_list = results.await.into_inner();
 
         for ix in 0..ix_list.incidents.len() {
@@ -123,7 +123,7 @@ pub mod cli {
     }
 
     pub async fn get_incidents_by_animal_group(addr: String, group: String) {
-        let results = grpc::incident::incident::get_incidents_by_animal_group(addr, group);
+        let results = grpc::incident::get_incidents_by_animal_group(addr, group);
         let ix_list = results.await.into_inner();
 
         for ix in 0..ix_list.incidents.len() {
